@@ -292,7 +292,7 @@ def create_pet():
         age=data["age"],
         animal_type=data["animal_type"],
         pathologies=data["pathologies"],
-        user_id=data["user_id"],
+        user_id=data["user_id"]
 
 
 )
