@@ -42,8 +42,9 @@ def setup_commands(app):
         catfood.weight = 1.
         catfood.price = 1.
         catfood.animal_type = "gato"
-        catfood.age = "sd"
-        catfood.pathologies = "asd"
+
+        catfood.age = "cachorro"
+        catfood.pathologies = "renal"
         db.session.add(catfood)
         db.session.commit()
 
@@ -57,6 +58,10 @@ def setup_commands(app):
         catfood.animal_type = "gato"
         catfood.age = "adulto"
         catfood.pathologies = "diabético"
+
+        catfood.age = "sd"
+        catfood.pathologies = "asd"
+
         db.session.add(catfood)
         db.session.commit()
         
@@ -85,10 +90,10 @@ def setup_commands(app):
         dogfood.description = "asd"
         dogfood.ingredients = "ads"
         dogfood.price = 1.
-        dogfood.pathologies = "renal"
+        dogfood.pathologies = "diabetes"
         dogfood.animal_type = "perro"
-        dogfood.age = "senior"
-        dogfood.size = "medium"
+        dogfood.age = "cachorro"
+        dogfood.size = "grande"
         dogfood.weight = 1.
         db.session.add(dogfood)
         db.session.commit()
@@ -129,12 +134,12 @@ def setup_commands(app):
     @app.cli.command("insert_data_pet")
     def insert_data_pet():
         pet= Pet()
-        pet.name = "asd"
+        pet.name = ""
         pet.size=""
         pet.breed= "asd"
         pet.age= "cachorro"
         pet.animal_type = "gato"
-        pet.pathologies="obesidad, diabetes"
+        pet.pathologies="diabetes"
         pet.user_id = 1
         db.session.add(pet)
         db.session.commit()
@@ -151,12 +156,24 @@ def setup_commands(app):
         db.session.commit()
         
         pet= Pet()
+        pet.name = "peluso"
+        pet.size="grande"
+        pet.breed= "asd"
+        pet.age="cachorro"
+        pet.animal_type = "perro"
+        pet.pathologies="diabetes"
+        pet.user_id = 1
+        db.session.add(pet)
+        db.session.commit()
+        
+        pet= Pet()
         pet.name = "asd"
         pet.size="oxbow"
         pet.breed= "asd"
         pet.age= "2"
         pet.animal_type = "cobaya"
         pet.pathologies="escorbuto"
+        pet.user_id = 1
         db.session.add(pet)
         db.session.commit()
         
@@ -167,6 +184,7 @@ def setup_commands(app):
         pet.age= "60"
         pet.animal_type = "loro"
         pet.pathologies=""
+        pet.user_id = 1
         db.session.add(pet)
         db.session.commit()
 

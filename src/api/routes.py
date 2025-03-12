@@ -5,10 +5,14 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Food, Pet, Accessories
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from sqlalchemy import select
+from sqlalchemy import select, and_, or_
 import json
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_bcrypt import Bcrypt 
 
 api = Blueprint('api', __name__)
+bcrypt = Bcrypt()
+
 
 # Allow CORS requests to this API
 CORS(api)
@@ -34,7 +38,7 @@ def get_foods():
     foods = Food.query.all()
     if not foods:
         return "food not found", 404
-    else: 
+    else:
         return jsonify([food.serialize() for food in foods]), 200
 
 
@@ -46,7 +50,7 @@ def get_food(food_id):
         return jsonify({"error": "Food not found"}), 404
     return jsonify(food.serialize()), 200
 
-
+#obtener todos los usuarios
 @api.route('/users', methods=['GET'])
 def get_users():
     users = User.query.all()
@@ -67,7 +71,7 @@ def get_user(user_id):
 @api.route('/pets', methods=['GET'])
 def get_pets():
     pets = Pet.query.all()
-    if not pets: 
+    if not pets:
         return "no pets found", 404
     return jsonify([pet.serialize() for pet in pets]), 200
 
@@ -80,59 +84,108 @@ def get_pet(pet_id):
         return jsonify({"error": "pet not found"}), 404
     return jsonify(pet.serialize()), 200
 
+
+
 #obtener sugerencias de comida según mascota
 @api.route('/foods/suggestions/<int:pet_id>', methods=['GET'])
+@jwt_required()
 def get_pet_suggestions(pet_id):
     pet = Pet.query.get(pet_id).serialize()
-    # Problema: Un animal puede tener varias patologias en su campo, habría que coger este campo y tratarlo, 
-    # separar las patologias en una lista y hacer la query para cada patologia. 
+    # Problema: Un animal puede tener varias patologias en su campo, habría que coger este campo y tratarlo,
+    # separar las patologias en una lista y hacer la query para cada patologia.
     # Solucion simple: limitar a 1 patologia cada animal por ahora
     #if para pet# anymal_type == perro, animal size    #si no no hace falta size
-    if pet["animal_type"] == "perro":   
-        food_suggestions = db.session.execute(select(Food).where(Food.animal_type==pet["animal_type"]),
+    if pet["animal_type"] == "perro":
+        food_suggestions = db.session.execute(select(Food).where(and_(Food.animal_type==pet["animal_type"]),
                                                              Food.size==pet["size"],
                                                              Food.age==pet["age"],
-                                                             Food.pathologies==pet["pathologies"]).all()
+                                                             Food.pathologies==pet["pathologies"])).all()
     else:
         food_suggestions = db.session.execute(select(Food).where(Food.animal_type==pet["animal_type"]),
                                                              Food.age==pet["age"],
                                                              Food.pathologies==pet["pathologies"]).all()
     if not food_suggestions :
-        return "no suggestions found", 404  
+        return "no suggestions found", 404
     return [food[0].serialize() for food in food_suggestions], 200
+
+
+# #obtener sugerencias de comida según mascota
+# @api.route('/foods/suggestions/<int:pet_id>', methods=['GET'])
+# def get_pet_suggestions(pet_id):
+#     pet = Pet.query.get(pet_id)
+#     if not pet:
+#         return jsonify({"error": "pet not found"}), 404
+    
+#     pet_data = pet.serialize()
+#     filters = [Food.animal_type == pet_data["animal_type"], Food.age == pet_data["age"]]
+    
+#     if pet_data["animal_type"] == "perro":
+#         filters.append(Food.size == pet_data["size"])
+    
+#     # Si la mascota tiene patologías, agregarlas al filtro
+#     if pet_data["pathologies"]:
+#         pathologies_list = pet_data["pathologies"].split(",")  
+#         filters.append(Food.pathologies.in_(pathologies_list))
+#     else: 
+#         filters.append(or_(Food.pathologies != None, Food.pathologies == None))
+#     food_suggestions = db.session.execute(select(Food).where(and_(*filters))).all()
+    
+#     if not food_suggestions:
+#         return jsonify({"error": "no suggestions found"}), 404
+    
+#     return jsonify([food[0].serialize() for food in food_suggestions]), 200
+
 
 #obtener todos los alimentos según tipo de animal
 @api.route('/foods/cat', methods=['GET'])
 def get_all_cat_food():
     food_cat = db.session.query(Food).filter(Food.animal_type.ilike("%gato%")).all()
-    
-    print("Datos obtenidos:", food_cat)  
-    
+
+    print("Datos obtenidos:", food_cat)
+
     if not food_cat:
-        return jsonify({"error": "No cat food found"}), 404  
-    
+        return jsonify({"error": "No cat food found"}), 404
+
+    print("Datos obtenidos:", food_cat)
+    if not food_cat:
+        return jsonify({"error": "No cat food found"}), 404
+
     return jsonify([food.serialize() for food in food_cat]), 200
+
+
 
 @api.route('/foods/dog', methods=['GET'])
 def get_all_dog_food():
     food_dog = db.session.query(Food).filter(Food.animal_type.ilike("%perro%")).all()
-    
-    print("Datos obtenidos:", food_dog)  
-    
+
+
+    print("Datos obtenidos:", food_dog)
+
     if not food_dog:
-        return jsonify({"error": "No dog food found"}), 404  
-    
+        return jsonify({"error": "No dog food found"}), 404
+
+
+    print("Datos obtenidos:", food_dog)
+    if not food_dog:
+        return jsonify({"error": "No dog food found"}), 404
+
     return jsonify([food.serialize() for food in food_dog]), 200
 
 @api.route('/foods/exotic', methods=['GET'])
 def get_all_exotic_food():
     food_exotic = db.session.query(Food).filter(Food.animal_type.ilike("%exótico%")).all()
-    
-    print("Datos obtenidos:", food_exotic)  
-    
+
+
+    print("Datos obtenidos:", food_exotic)
+
     if not food_exotic:
-        return jsonify({"error": "No exotic food found"}), 404  
-    
+        return jsonify({"error": "No exotic food found"}), 404
+
+
+    print("Datos obtenidos:", food_exotic)
+    if not food_exotic:
+        return jsonify({"error": "No exotic food found"}), 404
+
     return jsonify([food.serialize() for food in food_exotic]), 200
 
 # Obtener todos los accesorios
@@ -140,7 +193,7 @@ def get_all_exotic_food():
 def get_accessories():
     accessories = Accessories.query.all()
     if not accessories:
-        return "no accessories found", 404 
+        return "no accessories found", 404
     return jsonify([accessory.serialize() for accessory in accessories]), 200
 
 
@@ -172,24 +225,107 @@ def create_food():
     db.session.commit()
     return jsonify(new_food.serialize()), 201
 
-#crear nuevo usuario
-@api.route('/users', methods=['POST'])
+
+#registrar nuevo usuario(signup)
+
+@api.route('/signup', methods=['POST'])
 def create_user():
     data = request.get_json()
+    hashed_password = bcrypt.generate_password_hash(data["password"]).decode('utf-8') 
+
     new_user = User(
         name=data["name"],
         email=data["email"],
-        password=data["password"],
-        is_active=data["is_active"]
+        password=hashed_password
 )
+    if User.query.filter_by(email=data["email"]).first():
+        return jsonify({"msg": "El usuario ya existe"}), 400
+
     db.session.add(new_user)
     db.session.commit()
     return jsonify(new_user.serialize()), 201
+
+# iniciar sesion(login)
+# @api.route('/login', methods=['POST'])
+# def logging_user():
+#     data = request.get_json()
+#     user = User.query.filter_by(email=data["email"]).first()
+
+
+#     if User.query.filter_by(email=data["email"]).first() and User.query.filter_by(password=data["password"]).first():
+#         access_token=create_access_token(identity=user.email)
+#         return jsonify(access_token=access_token), 200
+    
+#     return jsonify ({"nsg":"credenciales invalidas"}), 400
+
+@api.route('/login', methods=['POST'])
+def login_user():
+
+    body = request.get_json()
+
+    if not body or "email" not in body or "password" not in body:
+        return jsonify({"msg": "credenciales no validas"}), 400 
+
+    email = body["email"]
+    password = body["password"]
+    user = User.query.filter_by(email=email).first()
+    print(user)
+    #if bcrypt.check_password_hash(user.password, body["password"]):
+    if user != None and bcrypt.check_password_hash(user.password, body["password"]):
+        token=create_access_token(identity=user.email)
+        user_data = {
+            "id": user.id,
+            "email": user.email,
+            "name": user.name
+        }
+        
+        return jsonify({"msg": "inicio de sesion exitoso", "token": token, "user": user_data}), 200
+    return jsonify({"msg": "credenciales no validas"}), 400 
+
+#Vista privada del usuario CON el token
+@api.route('/user', methods=['GET'])
+@jwt_required()
+def get_user_info():
+
+    current_user_email = get_jwt_identity()
+
+    user = User().query.filter_by(email=current_user_email).first()
+
+    if not user:
+        return jsonify({"msg": "usuario no encontrado"}), 400
+
+    user_data = {
+        "id": user.id,
+        "email": user.email,
+        "name": user.name
+    }
+
+    return jsonify(user_data), 200
+
+
+#Vista privada del usuario a sus mascotas
+@api.route('/user_pets', methods=['GET'])
+@jwt_required()
+def get_user_pets_info():
+
+    current_user_email = get_jwt_identity()
+
+    user = User().query.filter_by(email=current_user_email).first()
+
+    pets = Pet().query.filter_by(user_id=user.id).all()
+    
+    if not pets:
+        return jsonify({"msg": "mascota no econtrada"}), 400
+
+    return jsonify([pet.serialize() for pet in pets]), 200
+
+
 
 #crear un nuevo accesorio
 @api.route('/accessories', methods=['POST'])
 def create_accessory():
     data = request.get_json()
+    
     new_accessory = Accessories(
         name=data["name"],
         brand=data["brand"],
@@ -205,57 +341,125 @@ def create_accessory():
 
 #crear una nueva mascota
 @api.route('/pets', methods=['POST'])
+@jwt_required()
 def create_pet():
     data = request.get_json()
-    new_accessory = Pet(
+    current_user_email = get_jwt_identity()
+    user = User().query.filter_by(email=current_user_email).first()
+
+    if not user:
+        return jsonify({"msg": "usuario no encontrado"}), 400
+
+    new_pet = Pet(
         name=data["name"],
-        size=data["size"],
-        breed=data["breed"],
+        size= None,
+        breed= None,
         age=data["age"],
         animal_type=data["animal_type"],
-        pathologies=data["pathologies"],
-        user_id=data["user_id"],
-      
-        
-)
-    db.session.add(new_accessory)
+        pathologies= None,
+        url=data.get("url"),  # Asegúrate de que se está obteniendo correctamente
+        user_id=user.id
+        )
+    db.session.add(new_pet)
     db.session.commit()
-    return jsonify(new_accessory.serialize()), 201
+    return jsonify(new_pet.serialize()), 201
 
-# @api.route('/foods/<int:food_id>', methods=['PUT'])
-# def update_food(food_id):
-#     food = Food.query.get(food_id)
-#     if not food:
-#         return jsonify({"message": "Food not found"}), 404
+@api.route('/foods/<int:food_id>', methods=['PUT'])
+def update_food(food_id):
+    food = Food.query.get(food_id)
+    if not food:
+        return jsonify({"message": "Food not found"}), 404
 
-#     data = request.get_json()
+    data = request.get_json()
+
+    food.name = data.get("name", food.name)
+    food.brand = data.get("brand", food.brand)
+    food.description = data.get("description", food.description)
+    food.ingredients = data.get("ingredients", food.ingredients)
+    food.weight = data.get("weight", food.weight)
+    food.price = data.get("price", food.price)
+    food.animal_type = data.get("animal_type", food.animal_type)
+    food.size = data.get("size", food.size)
+    food.pathologies = data.get("pathologies", food.pathologies)
+    food.url = data.get("url", food.url)
+
+    db.session.commit()
+
+    return jsonify({
+        "id": food.id,
+        "name": food.name,
+        "brand": food.brand,
+        "description": food.description,
+        "ingredients": food.ingredients,
+        "animal_type": food.animal_type,
+        "price": food.price,
+        "weight": food.weight,
+        "size" : food.size,
+        "pathologies": food.pathologies,
+        "url": food.url
+    })
+
+
+
+@api.route('/users', methods=['PUT'])
+@jwt_required()
+def update_user():
+    current_user_email = get_jwt_identity()
+    user = User().query.filter_by(email=current_user_email).first()
+    if not user:
+        return jsonify({"message": "user not found"}), 404
+
+    data = request.get_json()
+
+    user.name = data.get("name", user.name)
+    user.password = data.get("password" , user.password)
+
+    db.session.commit()
+
+    return jsonify({
+        "id": user.id,
+        "name": user.name,
+        "password":user.password
+    })
+
+
+@api.route('/pets/<int:pet_id>', methods=['PUT'])
+@jwt_required()
+def new_pet(pet_id):
+    data = request.get_json()
+    current_user_email = get_jwt_identity()
+    user = User().query.filter_by(email=current_user_email).first()
+
+    if not user:
+
+        return jsonify({"msg": "usuario no encontrado"}), 400
     
-#     food.name = data.get("name", food.name)
-#     food.brand = data.get("brand", food.brand)
-#     food.description = data.get("description", food.description)
-#     food.ingredients = data.get("ingredients", food.ingredients)
-#     food.weight = data.get("weight", food.weight)
-#     food.price = data.get("price", food.price)
-#     food.animal_type = data.get("animal_type", food.animal_type)
-#     food.size = data.get("size", food.size)
-#     food.pathologies = data.get("pathologies", food.patologies)
-#     food.url = data.get("url", food.url)
+    data = request.get_json()
+    
+    pet=Pet().query.filter_by(id=pet_id).first()
 
-#     db.session.commit()
+    pet.name = data.get("name", pet.name)
+    pet.size = data.get("size", pet.size)
+    pet.age = data.get("age", pet.age)
+    pet.animal_type = data.get("animal_type", pet.animal_type)
+    pet.pathologies = data.get("pathologies", pet.pathologies)
+    pet.url = data.get("url", pet.url)
 
-#     return jsonify({
-#         "id": food.id,
-#         "name": food.name,
-#         "brand": food.brand,
-#         "description": food.description,
-#         "ingredients": food.ingredients,
-#         "animal_type": food.animal_type,
-#         "price": food.price,
-#         "weight": food.weight,
-#         "size" : food.size,       
-#         "pathologies": food.pathologies,
-#         "url": food.url
-#     })
+    db.session.commit()
+    return jsonify(new_pet.serialize()), 201
 
+@api.route('/user', methods=['DELETE'])
+@jwt_required()
+def delete_user():
+    # Buscar el usuario por su ID
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email = current_user_email).first()
 
+    # Eliminar el usuario de la base de datos
+    db.session.delete(user)
+    db.session.commit()
 
+    # Devolver una respuesta JSON indicando que el usuario fue eliminado
+    return jsonify({
+        'message': f'User {user.name} with id {user.id} has been deleted successfully.'
+    }), 200
