@@ -17,6 +17,7 @@ import { VistaProducto } from "./pages/VistaProducto";
 
 import { LoginSignup } from "./pages/loginSignup";
 import { RegistroMascota } from "./pages/RegistroMascota";
+import { CarritoPago } from "./pages/CarritoPago";
 
 
 
@@ -49,11 +50,13 @@ const PageWithNavbar = () => {
             {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
             <Routes>
                 <Route element={<Home />} path="/" />
-                <Route element={<VistaProducto />} path="/vista-producto" />
+                <Route element={<VistaProducto />} path="/vista-producto/:id" />
                 <Route element={<LoginSignup />} path="/loginSignup" />
                 <Route element={<PerfilUsuario />} path="/perfilUsuario" />
                 <Route element={<Demo />} path="/demo" />
                 <Route element={<Single />} path="/single/:theid" />
+                <Route element={<RegistroMascota />} path="/registro-mascota" />
+                <Route element={<CarritoPago />} path="/carrito" />
                 <Route element={<h1>Not found!</h1>} path="*" />
             </Routes>
         </>
