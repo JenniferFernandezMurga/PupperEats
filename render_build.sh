@@ -15,5 +15,6 @@ pipenv run flask insert_data_dogfood
 pipenv run flask insert_data_exoticfood
 pipenv run flask insert_data_accessories
 pipenv run flask insert_data_pet
+pipenv run migrate
 
 pipenv run upgrade
