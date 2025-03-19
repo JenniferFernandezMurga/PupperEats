@@ -69,9 +69,9 @@ export const Producto = ({ id, data }) => {
                   </div>
 
                   <div className="mt-auto text-center">
-                    <Link to="/carrito" className="btn btn-primary m-2" onClick={productAdd}>
+                    <button className="btn btn-primary m-2" onClick={productAdd}>
                       Añadir al carrito
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
