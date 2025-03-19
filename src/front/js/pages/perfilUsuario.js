@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import logo from "/workspaces/PupperEatsAppreact-flask-hello-deprecated/src/front/img/Icono puppereats.png";
+import logo from "../../img/Icono puppereats.png";
 import {EdicionPerfil} from "../component/edicionPerfil";
 import { Context } from "../store/appContext";
 import { User, MapPin, PlusCircle } from "lucide-react";
