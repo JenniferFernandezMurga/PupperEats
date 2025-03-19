@@ -48,7 +48,7 @@ def setup_commands(app):
         catfood.price = 6.42
         catfood.animal_type = "gato"
         catfood.age = "adulto"
-        catfood.pathologies = "hipoalergénico"
+        catfood.pathologies = "hipoalergenico"
         catfood.url = "https://era2vrmzk5n.exactdn.com/wp-content/uploads/2022/09/Pienso-15K-croqPEZ-Ayurveda-gato-kasaludintegral-1080x1080pix.jpg?strip=all&lossy=1&w=648&ssl=1"
         db.session.add(catfood)
         db.session.commit()
