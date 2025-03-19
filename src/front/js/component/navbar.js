@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import logo from "/workspaces/PupperEatsAppreact-flask-hello-deprecated/src/front/img/Icono puppereats.png";
+import logo from "../../img/Icono puppereats.png";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CiSearch } from "react-icons/ci";
