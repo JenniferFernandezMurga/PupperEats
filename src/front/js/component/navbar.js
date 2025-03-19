@@ -9,8 +9,13 @@ import { FaUserCircle, FaShoppingCart, FaSignOutAlt } from "react-icons/fa";
 export const Navbar = ({ setActiveCategory }) => {  // Recibimos setActiveCategory como prop
     const { store, actions } = useContext(Context);
     const { user, cart } = store;
-    const cartItemCount = cart.length;
 
+	useEffect(() => {
+		console.log("Usuario en navbar:", user);
+	}, [user, cart]);
+
+     const totalUnidades = store.cart.reduce((total, producto) => total + (producto.cantidad || 1), 0)
+     
     if (typeof setActiveCategory !== "function") {
         console.error("⚠️ Error: setActiveCategory no es una función en Navbar.js.");
         return null; // Evitamos que falle si `setActiveCategory` no es válida
@@ -58,7 +63,8 @@ export const Navbar = ({ setActiveCategory }) => {  // Recibimos setActiveCatego
                                     <span className="fw-semibold">Perfil</span>
                                 </Link>
                                 <Link to="/carrito" className="btn btn-warning d-flex align-items-center">
-                                    <FaShoppingCart size={18} className="me-1" /> Cesta {cartItemCount > 0 && `(${cartItemCount})`}
+                                    {/* <FaShoppingCart size={18} className="me-1" /> Cesta {cartItemCount > 0 && `(${cartItemCount})`} */}
+                                    <FaShoppingCart size={18} className="me-1" /> Cesta {totalUnidades > 0 && `(${totalUnidades})`}
                                 </Link>
                                 <button className="btn btn-light text-muted border-0 d-flex align-items-center" onClick={actions.logout}>
                                     <FaSignOutAlt size={16} className="me-1" /> Salir

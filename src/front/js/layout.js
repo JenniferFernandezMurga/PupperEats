@@ -19,6 +19,9 @@ import { VistaProducto } from "./pages/VistaProducto";
 import { LoginSignup } from "./pages/loginSignup";
 import { RegistroMascota } from "./pages/RegistroMascota";
 import { CarritoPago } from "./pages/CarritoPago";
+import { StripePromise } from "./pages/PaymentPage";
+import { PaymentPage } from "./pages/PaymentPage";
+import AlertComponent from "./pages/AlertComponent";
 
 
 
@@ -30,6 +33,7 @@ const Layout = () => {
 
     useEffect(() => {
         actions.loadUserFromStorage();
+        actions.loadCartFromStorage();
 
         // Detectar actividad del usuario y reiniciar el temporizador
         const resetInactivityTimer = () => {
@@ -85,6 +89,8 @@ const PageWithNavbar = ({ activeCategory, setActiveCategory }) => {
                 <Route element={<Single />} path="/single/:theid" />
                 <Route element={<RegistroMascota />} path="/registro-mascota" />
                 <Route element={<CarritoPago />} path="/carrito" />
+                <Route path="/checkout/:totalAmount/:currency" element={<PaymentPage />} />
+                <Route element={<AlertComponent />} path="/confirmacion-pedido" /> 
                 <Route element={<RecuperacionContraseña />} path="/recuperacionContraseña" />
                 <Route element={<h1>Not found!</h1>} path="*" />
             </Routes>

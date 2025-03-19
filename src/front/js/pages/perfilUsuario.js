@@ -34,7 +34,7 @@ export const PerfilUsuario = () => {
                               <img src={logo} alt="Logo" style={{ height: "60px", border: "3px solid #000", borderRadius: "10px", padding: "3px" }} />
                               <span className="fw-bold text-dark" style={{ fontSize: "1.5rem", marginLeft: "10px" }}>Pupper Eats</span>
                           </Link>
-          <button className="btn btn-warning me-2">🛒 Carrito</button>
+                          <button className="btn btn-warning me-2" onClick={() => navigate("/carrito")}>🛒 Carrito</button>
           <button className="btn btn-outline-secondary" onClick={actions.logout}>Cerrar sesión</button>
         </div>
       </div>

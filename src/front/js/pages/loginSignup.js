@@ -72,9 +72,6 @@ export const LoginSignup = () => {
                         <p>
                             ¿Olvidaste tu contraseña? <Link to="/RecuperacionContraseña">Recupérala aquí</Link>
                         </p>
-                        <p>
-                            <Link to="/">Volver</Link>
-                        </p>
                     </form>
                 )}
                 {isSignup && (
@@ -109,6 +106,8 @@ export const LoginSignup = () => {
                         <p onClick={() => setIsSignup(false)}>¿Ya tienes cuenta? <strong>Inicia sesión</strong></p>
                     </form>
                 )}
+                  <Link to="/">
+                  <p>Volver a la página principal</p></Link>
             </div>
         </div>
     );
