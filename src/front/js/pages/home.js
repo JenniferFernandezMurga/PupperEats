@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import logo from "/workspaces/PupperEatsAppreact-flask-hello-deprecated/src/front/img/perros-gatos-asomandose-sobre-banner-web-aislado-fondo-blanco-al-generado_866663-5304 (1) (1).jpg";
+import logo from "../../img/perros-gatos-asomandose-sobre-banner-web-aislado-fondo-blanco-al-generado_866663-5304 (1) (1).jpg";
 import { Context } from "../store/appContext";
 import { Card } from "../component/card";
 import "../../styles/home.css";
