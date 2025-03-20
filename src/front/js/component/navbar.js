@@ -42,16 +42,16 @@ export const Navbar = ({ setActiveCategory }) => {  // Recibimos setActiveCatego
 
                     <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li className="nav-item m-2">
-                            <button className="nav-link fw-semibold btn btn-link text-dark" onClick={() => setActiveCategory("dogFood")}>Caninos</button>
+                            <Link to="/" className="nav-link fw-semibold btn btn-link text-dark" onClick={() => setActiveCategory("dogFood")}>Caninos</Link>
                         </li>
                         <li className="nav-item m-2">
-                            <button className="nav-link fw-semibold btn btn-link text-dark" onClick={() => setActiveCategory("catFood")}>Felinos</button>
+                            <Link to="/" className="nav-link fw-semibold btn btn-link text-dark" onClick={() => setActiveCategory("catFood")}>Felinos</Link>
                         </li>
                         <li className="nav-item m-2">
-                            <button className="nav-link fw-semibold btn btn-link text-dark" onClick={() => setActiveCategory("exoticFood")}>Exóticos</button>
+                            <Link to="/" className="nav-link fw-semibold btn btn-link text-dark" onClick={() => setActiveCategory("exoticFood")}>Exóticos</Link>
                         </li>
                         <li className="nav-item m-2">
-                            <button className="nav-link fw-semibold btn btn-link text-dark" onClick={() => setActiveCategory("accesories")}>Accesorios</button>
+                            <Link to="/" className="nav-link fw-semibold btn btn-link text-dark" onClick={() => setActiveCategory("accesories")}>Accesorios</Link>
                         </li>
                     </ul>
 

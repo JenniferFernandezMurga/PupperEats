@@ -1,18 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
 import { Link, useNavigate } from 'react-router-dom';
-import "../../styles/home.css";
 
 export const LoginSignup = () => {
-    const { actions, store } = useContext(Context);
+    const { actions } = useContext(Context);
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSignup, setIsSignup] = useState(false);
-    const [loading, setLoading] = useState(false); 
-    const [error, setError] = useState(''); 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
     const handleSubmit = async (e) => {
@@ -25,7 +24,7 @@ export const LoginSignup = () => {
             const dataUser = { name, email, password };
             if (isSignup) {
                 await actions.signup(dataUser, navigate);
-                setSuccessMessage('¡Registro exitoso! Redirigiendo a inicio de sesión...');
+                setSuccessMessage('¡Registro exitoso! Redirigiendo...');
                 setTimeout(() => {
                     setIsSignup(false);
                 },);
@@ -35,79 +34,136 @@ export const LoginSignup = () => {
             setName('');
             setEmail('');
             setPassword('');
-        } catch (err) {
-            setError('Error al procesar la solicitud. Por favor, intenta nuevamente.');
+        } catch (error) {
+            setError('Error al procesar la solicitud.');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="registration-view-container" style={{ background: "linear-gradient(to bottom, #FCE5CD, #FFFFFF)" }}>
-            <div className="form-container">
-                {!isSignup && (
-                    <form className="auth-form login-form" onSubmit={handleSubmit}>
-                        <h2>Iniciar sesión</h2>
-                        <input
-                            type="email"
-                            placeholder="Correo electrónico"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="password"
-                            placeholder="Contraseña"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                        <button type="submit" disabled={loading}>
-                            {loading ? 'Cargando...' : 'Iniciar sesión'}
+        <div 
+            className="d-flex justify-content-center align-items-center min-vh-100" 
+            style={{
+                background: "linear-gradient(to bottom, #ffcc80, #ffffff)",
+                backgroundSize: "cover",
+                padding: "2rem"
+            }}
+        >
+            <div
+                className="card shadow-lg p-5"
+                style={{
+                    width: "100%",
+                    maxWidth: "35rem",
+                    borderRadius: "20px",
+                    backgroundColor: "#ffffff",
+                    border: "none",
+                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)"
+                }}
+            >
+                <div className="card-body text-center">
+                    <h2 className="mb-4" style={{ color: "#333", fontWeight: "bold" }}>
+                        {isSignup ? "Regístrate" : "Iniciar sesión"}
+                    </h2>
+
+                    <form onSubmit={handleSubmit}>
+                        {isSignup && (
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control p-3"
+                                    style={{
+                                        borderRadius: "10px",
+                                        border: "2px solid #ddd",
+                                        transition: "border-color 0.3s ease-in-out",
+                                    }}
+                                    placeholder="Nombre"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                    onFocus={(e) => e.target.style.borderColor = "#007bff"}
+                                    onBlur={(e) => e.target.style.borderColor = "#ddd"}
+                                />
+                            </div>
+                        )}
+                        <div className="mb-3">
+                            <input
+                                type="email"
+                                className="form-control p-3"
+                                style={{
+                                    borderRadius: "10px",
+                                    border: "2px solid #ddd",
+                                    transition: "border-color 0.3s ease-in-out",
+                                }}
+                                placeholder="Correo electrónico"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                onFocus={(e) => e.target.style.borderColor = "#007bff"}
+                                onBlur={(e) => e.target.style.borderColor = "#ddd"}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <input
+                                type="password"
+                                className="form-control p-3"
+                                style={{
+                                    borderRadius: "10px",
+                                    border: "2px solid #ddd",
+                                    transition: "border-color 0.3s ease-in-out",
+                                }}
+                                placeholder="Contraseña"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                onFocus={(e) => e.target.style.borderColor = "#007bff"}
+                                onBlur={(e) => e.target.style.borderColor = "#ddd"}
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            className="btn w-100 py-2"
+                            style={{
+                                backgroundColor: loading ? "#6c757d" : "#007bff",
+                                color: "#ffffff",
+                                fontSize: "1.1rem",
+                                borderRadius: "10px",
+                                transition: "0.3s ease-in-out",
+                                cursor: loading ? "not-allowed" : "pointer",
+                            }}
+                            disabled={loading}
+                            onMouseOver={(e) => !loading && (e.target.style.backgroundColor = "#0056b3")}
+                            onMouseOut={(e) => !loading && (e.target.style.backgroundColor = "#007bff")}
+                        >
+                            {loading ? "Cargando..." : isSignup ? "Registrar" : "Iniciar sesión"}
                         </button>
-                        {error && <p className="error-message">{error}</p>}
-                        <p onClick={() => setIsSignup(true)}>¿No tienes cuenta? <strong>Regístrate</strong></p>
-                        
-                        {/* NUEVO: Enlace para recuperación de contraseña */}
-                        <p>
-                            ¿Olvidaste tu contraseña? <Link to="/RecuperacionContraseña">Recupérala aquí</Link>
+
+                        {error && <p className="text-danger text-center mt-2">{error}</p>}
+                        {successMessage && <p className="text-success text-center mt-2">{successMessage}</p>}
+                    </form>
+
+                    <p className="text-center mt-3">
+                        {isSignup ? (
+                            <>
+                                ¿Ya tienes cuenta? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setIsSignup(false)}>Inicia sesión</span>
+                            </>
+                        ) : (
+                            <>
+                                ¿No tienes cuenta? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setIsSignup(true)}>Regístrate</span>
+                            </>
+                        )}
+                    </p>
+
+                    {!isSignup && (
+                        <p className="text-center mt-1">
+                            <Link to="/RecuperacionContraseña" className="text-primary">¿Olvidaste tu contraseña?</Link>
                         </p>
-                    </form>
-                )}
-                {isSignup && (
-                    <form className="auth-form signup-form" onSubmit={handleSubmit}>
-                        <h2>Regístrate</h2>
-                        <input
-                            type="name"
-                            placeholder="Nombre"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="email"
-                            placeholder="Correo electrónico"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="password"
-                            placeholder="Contraseña"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                        <button type="submit" disabled={loading}>
-                            {loading ? 'Cargando...' : 'Registrar'}
-                        </button>
-                        {error && <p className="error-message">{error}</p>}
-                        {successMessage && <p className="success-message">{successMessage}</p>}
-                        <p onClick={() => setIsSignup(false)}>¿Ya tienes cuenta? <strong>Inicia sesión</strong></p>
-                    </form>
-                )}
-                  <Link to="/">
-                  <p>Volver a la página principal</p></Link>
+                    )}
+
+                    <Link to="/" className="d-block mt-3 text-secondary" style={{ fontSize: "1rem", textDecoration: "none" }}>
+                        <i className="bi bi-arrow-left"></i> Volver a la página principal
+                    </Link>
+                </div>
             </div>
         </div>
     );
