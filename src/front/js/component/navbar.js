@@ -1,29 +1,27 @@
 import React, { useContext, useEffect } from "react";
 import logo from "../../img/Icono puppereats.png";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CiSearch } from "react-icons/ci";
 import { Context } from "../store/appContext";
 import { FaUserCircle, FaShoppingCart, FaSignOutAlt } from "react-icons/fa";
 
-export const Navbar = ({ setActiveCategory }) => {  // Recibimos setActiveCategory como prop
+export const Navbar = ({ setActiveCategory }) => {  
     const { store, actions } = useContext(Context);
     const { user, cart } = store;
 
-	useEffect(() => {
-		console.log("Usuario en navbar:", user);
-	}, [user, cart]);
+    useEffect(() => {
+        console.log("Usuario en navbar:", user);
+    }, [user, cart]);
 
-     const totalUnidades = store.cart.reduce((total, producto) => total + (producto.cantidad || 1), 0)
+    const totalUnidades = store.cart.reduce((total, producto) => total + (producto.cantidad || 1), 0);
      
     if (typeof setActiveCategory !== "function") {
         console.error("⚠️ Error: setActiveCategory no es una función en Navbar.js.");
-        return null; // Evitamos que falle si `setActiveCategory` no es válida
+        return null;
     }
 
     return (
         <nav className="navbar navbar-expand-lg shadow-lg" style={{ 
-            background: "#CED89E" ,
+            background: "#EABDE6" ,
             padding: "15px 30px",
         }}>
             <div className="container-fluid">
@@ -33,13 +31,6 @@ export const Navbar = ({ setActiveCategory }) => {  // Recibimos setActiveCatego
                 </Link>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form className="d-flex me-auto" role="search">
-                        <input className="form-control me-2" type="search" placeholder="Buscar comida..." aria-label="Search" style={{ borderRadius: "8px", height: "30px", width: "250px", fontSize: "1.1rem" }} />
-                        <button className="btn btn-outline-dark" type="submit" style={{ borderRadius: "8px", padding: "2px 6px" }}>
-                            <CiSearch size={12} />
-                        </button>
-                    </form>
-
                     <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li className="nav-item m-2">
                             <Link to="/" className="nav-link fw-semibold btn btn-link text-dark" onClick={() => setActiveCategory("dogFood")}>Caninos</Link>
@@ -63,7 +54,6 @@ export const Navbar = ({ setActiveCategory }) => {  // Recibimos setActiveCatego
                                     <span className="fw-semibold">Perfil</span>
                                 </Link>
                                 <Link to="/carrito" className="btn btn-warning d-flex align-items-center">
-                                    {/* <FaShoppingCart size={18} className="me-1" /> Cesta {cartItemCount > 0 && `(${cartItemCount})`} */}
                                     <FaShoppingCart size={18} className="me-1" /> Cesta {totalUnidades > 0 && `(${totalUnidades})`}
                                 </Link>
                                 <button className="btn btn-light text-muted border-0 d-flex align-items-center" onClick={actions.logout}>
