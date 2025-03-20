@@ -21,13 +21,13 @@ export const Navbar = ({ setActiveCategory }) => {
 
     return (
         <nav className="navbar navbar-expand-lg shadow-lg" style={{ 
-            background: "#EABDE6" ,
+            background: "#257180" ,
             padding: "15px 30px",
         }}>
             <div className="container-fluid">
                 <Link to="/" className="navbar-brand d-flex align-items-center" onClick={() => setActiveCategory(null)}>
                     <img src={logo} alt="Logo" style={{ height: "60px", border: "3px solid #000", borderRadius: "10px", padding: "3px" }} />
-                    <span className="fw-bold text-dark" style={{ fontSize: "1.5rem", marginLeft: "10px" }}>Pupper Eats</span>
+                    <span className="fw-bold text-dark" style={{ fontSize: "2.5rem", marginLeft: "10px" }}>Pupper Eats</span>
                 </Link>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
