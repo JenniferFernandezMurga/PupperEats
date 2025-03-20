@@ -95,10 +95,15 @@ export const VistaMascota = () => {
         <div className="col-md-6">
           <div className="card">
             <img
-              src={petDetails.url || '/default-image.jpg'}
-              alt={petDetails.name}
-              className="card-img-top"
-              style={{ width: '100%', height: 'auto' }}
+              src={
+                petDetails.animal_type === "perro" ? "https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/1024px/1f436.png" :
+                petDetails.animal_type === "gato" ? "https://cdn-icons-png.flaticon.com/512/6988/6988878.png" :
+                petDetails.animal_type === "exotico" ? "https://cdn-icons-png.flaticon.com/512/802/802338.png" :
+                "https://via.placeholder.com/60"
+            } 
+            alt={petDetails.name} 
+            className="rounded-circle border border-secondary"
+            style={{ width: "140px", height: "140px", objectFit: "cover" }}
             />
             <div className="card-body">
               <h5 className="card-title">{petDetails.name}</h5>

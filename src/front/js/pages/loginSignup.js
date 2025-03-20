@@ -24,7 +24,7 @@ export const LoginSignup = () => {
             const dataUser = { name, email, password };
             if (isSignup) {
                 await actions.signup(dataUser, navigate);
-                setSuccessMessage('¡Registro exitoso! Redirigiendo...');
+                setSuccessMessage();
                 setTimeout(() => {
                     setIsSignup(false);
                 },);

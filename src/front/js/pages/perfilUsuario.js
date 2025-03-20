@@ -69,7 +69,10 @@ export const PerfilUsuario = () => {
                 style={{ cursor: "pointer" }}
               >
                 <img 
-                  src={pet.url || "https://via.placeholder.com/60"} 
+                  src={pet.animal_type === "perro" ? "https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/1024px/1f436.png" :
+                       pet.animal_type === "gato" ? "https://cdn-icons-png.flaticon.com/512/6988/6988878.png" :
+                       pet.animal_type === "exotico" ? "https://cdn-icons-png.flaticon.com/512/802/802338.png" :
+                    "https://via.placeholder.com/60" }
                   alt={pet.name} 
                   className="rounded-circle border border-secondary"
                   style={{ width: 60, height: 60, objectFit: "cover" }} 
