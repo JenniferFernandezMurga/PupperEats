@@ -9,4 +9,3 @@ cd ../..
 
 pipenv install
 
-pipenv run upgrade
