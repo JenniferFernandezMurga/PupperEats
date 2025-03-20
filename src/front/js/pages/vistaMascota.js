@@ -81,7 +81,9 @@ export const VistaMascota = () => {
   if (!petDetails) return null;
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5"
+      style={{
+        background: "linear-gradient(to bottom, #F2E5BF, #ffffff)",}}>
       <h2 className="text-center mb-4">🐾 Detalles de la Mascota</h2>
 
       {/* Diseño mejorado para mostrar la imagen y el nombre al lado */}
