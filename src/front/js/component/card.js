@@ -10,16 +10,16 @@ export const Card = ({name, id, description, price, url}) => {
 
 const navigate = useNavigate();
 const truncatedDescription =
-description.length > 50 ? description.slice(0, 50) + "..." : description;
+description.length > 40 ? description.slice(0, 40) + "..." : description;
 const truncatedName = name.length > 30 ? name.slice(0, 30) + "..." : name;
 
 const { store, actions } = useContext(Context); 
 
 const handleAddToCart = () => {
   
-  // Verifica si el usuario está registrado
-  if (store.user) { // Asumiendo que `store.user` contiene información del usuario si está autenticado
-    actions.addToCart({ name, id, price, url }); // Añade el producto al carrito
+
+  if (store.user) { 
+    actions.addToCart({ name, id, price, url }); 
   } else {
     navigate("/loginSignup"); // Redirige al login si no está autenticado
   }
@@ -46,11 +46,11 @@ style={{
   <div>
     <p className="card-text" style={{
               color:"grey",
-              height: "60px", // Altura fija para la descripción
-              overflow: "hidden", // Oculta el texto que excede
-              textOverflow: "ellipsis", // Añade puntos suspensivos
+              height: "60px", 
+              overflow: "hidden", 
+              textOverflow: "ellipsis", 
               display: "-webkit-box",
-              WebkitLineClamp: 3, // Número de líneas a mostrar
+              WebkitLineClamp: 3,
               WebkitBoxOrient: "vertical",
             }}
           >

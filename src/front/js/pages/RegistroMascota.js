@@ -183,9 +183,9 @@ export const RegistroMascota = () => {
                             type="submit"
                             className="btn mt-4 border"
                             style={{
-                                background: "#EB5A3C",
-                                width: "400px",
-                                color: "black", // Añade color de texto para mejor contraste
+                                background:"#FD8B51",
+                                width: "300px",
+                                color: "white", 
                             
                             }}
                         >
