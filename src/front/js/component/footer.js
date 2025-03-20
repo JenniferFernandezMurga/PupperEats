@@ -7,7 +7,7 @@ export const Footer = () => {
                 {/* Sección de Información */}
                 <div>
                     <h3 className="text-xl font-semibold mb-2">Sobre Nosotros</h3>
-                    <p className="text-gray-600">Nos dedicamos a proporcionar la mejor información sobre alimentación y cuidado de tus mascotas.</p>
+                    <p className="text-gray-600">En PupperEats queremos que tus peludos tengan la mejor calidad de vida posible. Somos defensores de la comida de calidad sin aditivos innecesarios que ofrezcan la mejor opción según las necesidades específicas de tu mascota.</p>
                 </div>
                 
                 {/* Sección de Redes Sociales */}
@@ -27,7 +27,7 @@ export const Footer = () => {
                 </div>
             </div>
             <div className="text-center text-gray-500 text-sm mt-6">
-                &copy; 2024 Pupper Eats - Todos los derechos reservados
+                &copy; 2025 Pupper Eats - Todos los derechos reservados
             </div>
         </footer>
     );
