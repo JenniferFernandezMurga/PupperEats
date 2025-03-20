@@ -8,6 +8,7 @@ npm run build
 cd ../..
 
 pipenv install
+pipenv run reset_db
 pipenv run flask insert-test-users 5
 pipenv run flask insert_data_catfood
 pipenv run flask insert_data_dogfood
