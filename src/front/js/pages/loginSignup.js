@@ -45,7 +45,7 @@ export const LoginSignup = () => {
         <div 
             className="d-flex justify-content-center align-items-center min-vh-100" 
             style={{
-                background: "linear-gradient(to bottom, #ffcc80, #ffffff)",
+                background: "linear-gradient(to bottom, #FFDCAE, #ffffff)",
                 backgroundSize: "cover",
                 padding: "2rem"
             }}

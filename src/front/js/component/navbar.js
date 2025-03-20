@@ -23,7 +23,7 @@ export const Navbar = ({ setActiveCategory }) => {  // Recibimos setActiveCatego
 
     return (
         <nav className="navbar navbar-expand-lg shadow-lg" style={{ 
-            background: "linear-gradient(180deg, #FBD989 5%, #F4C4A4 40%, #EC955B 95%)",
+            background: "#CED89E" ,
             padding: "15px 30px",
         }}>
             <div className="container-fluid">
