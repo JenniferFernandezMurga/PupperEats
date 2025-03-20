@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import "../../styles/registroMascota.css";
+import "../../styles/RegistroMascota.css";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
@@ -55,34 +55,47 @@ export const RegistroMascota = () => {
         }
     };
 
+  
 
+    // URLs de las imágenes según el tipo de animal
+    // const animalImages = {
+    //     canina: "https://thumbs.dreamstime.com/z/print-142118410.jpg",
+    //     gato: "https://ejemplo.com/imagen-gato.jpg",
+    //     exotico: "https://ejemplo.com/imagen-exotico.jpg"
+    // }
 
 
     //cargar foto formulario
-    const handleFileChange = (e) => {
-        setPhotoPet(e.target.files[0]);
-    };
+    // const handleFileChange = (e) => {
+    //     setPhotoPet(e.target.files[0]);
+    // };
     
 
     return (
-        <div className="container mt-5">
-            <h2>Registro de Mascota</h2>
+        <div className="container my-3" style={{
+                width:"500px",
+                height:"800px"
+            }}>
+            <h2 className="title text-center"><strong><u>Registro de Mascota</u></strong></h2>
             <div className="d-flex">
                 <form onSubmit={handleSubmit} className="flex-grow-1">
                     <div className="mb-3">
-                        <label htmlFor="nombre" className="form-label">Nombre de la mascota</label>
+                        <label htmlFor="nombre" className="form-label mt-3">Nombre de la mascota</label>
                         <input
                             type="text"
                             className="form-control"
                             id="nombre"
                             name="name"
                             value={newPet.name}
+                            placeholder="Añade el nombre de tu mascota"
                             onChange={handleChange}
                             required
                         />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="especie" className="form-label">Especie</label>
+                        <label htmlFor="especie" className="form-label"
+                       >
+                            Especie</label>
                         <select
                             className="form-select"
                             id="especie"
@@ -91,7 +104,7 @@ export const RegistroMascota = () => {
                             onChange={handleChange}
                             required
                         >
-                            <option value="">Selecciona una especie</option>
+                            <option  value="">Selecciona una especie</option>
                             <option value="perro">Canina</option>
                             <option value="gato">Felina</option>
                             <option value="exotico">Exótico</option>
@@ -104,6 +117,8 @@ export const RegistroMascota = () => {
                             type="text"
                             className="form-control"
                             id="raza"
+                            placeholder="Añade la raza de tu mascota"
+
                             name="breed"
                             value={newPet.breed}
                             onChange={handleChange}
@@ -147,6 +162,7 @@ export const RegistroMascota = () => {
                         <label htmlFor="patologia" className="form-label">Patología</label>
                         <select
                             className="form-select"
+                          
                             id="patologia"
                             name="pathologies"
                             value={newPet.pathologies}
@@ -162,20 +178,40 @@ export const RegistroMascota = () => {
                             <option value="hipoalergenico">Hipoalergénico</option>
                         </select>
                     </div>
-                    <button type="submit" className="btn btn-primary">Registrar Mascota</button>
+                    <div className="d-flex justify-content-center">
+                        <button
+                            type="submit"
+                            className="btn mt-4 border"
+                            style={{
+                                background: "#EB5A3C",
+                                width: "400px",
+                                color: "black", // Añade color de texto para mejor contraste
+                            
+                            }}
+                        >
+                            <strong>Registrar Mascota</strong>
+                        </button>
+                    </div>
                 </form>
 
-                <div className="fotoMascota ms-4">
+
+                {/* <div className="fotoMascota ms-4">
                     <h4>Sube una foto de tu compañero/a :</h4>
-                    {photoPet && (
+                    {photoPet ? (
                         <div className="mt-2" style={{ width: "200px", height: "200px" }}>
                             <img src={URL.createObjectURL(photoPet)} alt="Vista previa" width="100%" />
                             <p>Archivo: {photoPet.name}</p>
                         </div>
-                    )}
-                    <input type="file" accept="image/*" onChange={handleFileChange} className="mt-2" />
-                </div>
+                    ) : (
+                        <div className="mt-2" style={{ width: "200px", height: "200px" }}>
+                            <img src={animalImages[newPet.animal_type] || "https://ejemplo.com/imagen-default.jpg"} alt="Imagen de mascota" width="100%" />
+                        </div>
+                    )} */}
+                    {/* <input type="file" accept="image/*" onChange={handleFileChange} className="mt-2" /> */}
+                {/* </div> */}
+               
+              
             </div>
         </div>
     );
-};
+}

@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaypal } from '@fortawesome/free-brands-svg-icons';
+import "../../styles/CarritoPago.css";
 
 
 export const CarritoPago = () => {
@@ -164,7 +165,7 @@ export const CarritoPago = () => {
     }, [store.cart]);
 
     return (
-        <div className="container-fluid justify-content-center mt-1 p-3 text-dark">
+        <div className="padre container-fluid justify-content-center mt-1 p-3 text-dark">
 
             <ul className="nav nav-tabs justify-content-center" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
@@ -178,7 +179,10 @@ export const CarritoPago = () => {
             <div className="tab-content" id="myTabContent">
                 <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">
                     <div className="container-fluid overflow-hidden my-4 d-flex w-75">
-                        <div className="row col-md-6 flex-grow-1">
+                        <div className="row col-md-6 flex-grow-1"
+                        style={{
+                            width:"500px"
+                        }}>
                             <h3 className="p-3">Productos en el carrito:</h3>
 
                             {productos.length === 0 ? (
@@ -206,7 +210,7 @@ export const CarritoPago = () => {
                                                         <div className="d-flex align-items-center" style={{ width: '100px' }}>
                                                             <label htmlFor={`cantidad-${producto.id}`} className="form-label visually-hidden">Cantidad:</label>
                                                             <select
-                                                                className="form-select form-select-sm"
+                                                                className="form-select form-select-sm ps-4"
                                                                 id={`cantidad-${producto.id}`}
                                                                 value={carrito.find(item => item.id === producto.id)?.cantidad || 1}
                                                                 onChange={(e) => handleCantidadChange(producto.id, parseInt(e.target.value))}
@@ -240,13 +244,13 @@ export const CarritoPago = () => {
 
                         <div className="row carrito col-md-3 m-3 p-4 rounded border" style={{ width: "400px", height: "400px" }}>
                             <h3 className="p-3">Resumen del carrito</h3>
-                                <ul>
+                                {/* <ul>
                                     {carrito.map(item => (
                                         <li key={item.id}>
                                             {item.name} - {item.cantidad} unidades
                                         </li>
                                     ))}
-                                </ul>
+                                </ul> */}
                                 <p>Total de productos: {totalUnidades}</p>
                                 <p>Subtotal: {subtotal.toFixed(2)}€</p>
                                 <p>IVA (21%): {(subtotal * 0.21).toFixed(2)}€</p>

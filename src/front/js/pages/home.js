@@ -6,7 +6,7 @@ import "../../styles/home.css";
 
 export const Home = ({ activeCategory }) => { 
 	const { store, actions } = useContext(Context);
-
+	// const dogFoodRef = useRef(null); // Contenedor de cards de perros
 	useEffect(() => {
 		actions.getDogFood();
 		actions.getCatFood();
@@ -17,7 +17,7 @@ export const Home = ({ activeCategory }) => {
 	return (
 		<>
 			<div className="container-fluid p-0" style={{ 
-				background: "linear-gradient(to bottom, #FCE5CD, #FFFFFF)", 
+				backgroundColor: "#AD196", 
 				minHeight: "100vh", 
 				paddingBottom: "50px" 
 			}}>
@@ -32,8 +32,8 @@ export const Home = ({ activeCategory }) => {
 				{/* 📌 Si no hay categoría activa, mostramos todos los productos */}
 				{activeCategory === null && (
 					<>
-						<div className="sección perros m-5 p-4 rounded" style={{ backgroundColor: "#FDF3E7" }}>
-							<h3 className="text-primary border-bottom pb-2">Productos top para perros</h3>
+						<div className="sección perros m-5 p-4 rounded" style={{ backgroundColor: "#EAD196" }}>
+							<h3 className="text-primary border-bottom pb-2" style={{ color: "#7D0A0A" }}>Productos top para perros</h3>
 							<div className="row">
 								{store.dogFood.map((dogFood, index) => (
 									<Card key={index} {...dogFood} />
@@ -41,8 +41,8 @@ export const Home = ({ activeCategory }) => {
 							</div>
 						</div>
 
-						<div className="sección gatos m-5 p-4 rounded" style={{ backgroundColor: "#FAE0C3" }}>
-							<h3 className="text-warning border-bottom pb-2">Productos top para gatos</h3>
+						<div className="sección gatos m-5 p-4 rounded" style={{ backgroundColor: "#EAD196" }}>
+							<h3 className="text-warning border-bottom pb-2" style={{ color: "#7D0A0A" }}>Productos top para gatos</h3>
 							<div className="row">
 								{store.catFood.map((catFood, index) => (
 									<Card key={index} {...catFood} />
@@ -50,16 +50,16 @@ export const Home = ({ activeCategory }) => {
 							</div>
 						</div>
 
-						<div className="sección exóticos m-5 p-4 rounded" style={{ backgroundColor: "#E0F7E7" }}>
-							<h3 className="text-success border-bottom pb-2">Productos top para animales exóticos</h3>
+						<div className="sección exóticos m-5 p-4 rounded" style={{ backgroundColor: "#EAD196" }}>
+							<h3 className="text-success border-bottom pb-2" style={{ color: "#7D0A0A" }}>Productos top para animales exóticos</h3>
 							<div className="row">
 								{store.exoticFood.map((exoticFood, index) => (
 									<Card key={index} {...exoticFood} />
 								))}
 							</div>
 						</div>
-						<div className="sección accesorios m-5 p-4 rounded" style={{ backgroundColor: "#E0F7E7", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}>
-							<h3 className="text-success border-bottom pb-2">Acesorios top para tu mascota</h3>
+						<div className="sección accesorios m-5 p-4 rounded" style={{ backgroundColor: "#EAD196", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}>
+							<h3 className="text-success border-bottom pb-2" style={{ color: "#7D0A0A" }}>Acesorios top para tu mascota</h3>
 						<div className="row">
 							{store.accessories.map((accessories, index) => (
 								<Card key={index} {...accessories} />
