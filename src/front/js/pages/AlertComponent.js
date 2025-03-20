@@ -24,9 +24,17 @@ const AlertComponent = () => {
                     <p className='mt-3'>Aww yeah..! Tu pedido se ha realizado correctamente. En unos minutos recibirás la confirmación en tu correo electrónico.</p>
                     <p className="mb-0">Si necesitas cancelar algún producto o realizar cualquier modificación, ponte en contacto con nosotros a través del formulario de contacto.</p>
                     <hr/>
-                    <Link className="text-center" to="/">
-                    <p><strong>Volver a la página principal</strong></p>
+                    <Link 
+                        className="text-center" 
+                        to="/" 
+                        onClick={(e) => {
+                        e.preventDefault(); // Evita que React Router haga la navegación interna
+                        window.location.href = "/"; // Redirige y recarga correctamente
+                        }}
+                        >
+                        <p><strong>Volver a la página principal</strong></p>
                     </Link>
+
                 </div>
             )}
           

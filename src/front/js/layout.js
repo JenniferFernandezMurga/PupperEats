@@ -74,7 +74,7 @@ const Layout = () => {
 // Nuevo componente para manejar el Navbar
 const PageWithNavbar = ({ activeCategory, setActiveCategory }) => {
     const location = useLocation(); 
-    const hideNavbarRoutes = ["/perfilUsuario", "/loginSignup"];   // Rutas donde ocultamos el Navbar
+    const hideNavbarRoutes = ["/perfilUsuario","/RecuperacionContraseña",];   // Rutas donde ocultamos el Navbar
 
     return (
         <>
