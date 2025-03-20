@@ -24,11 +24,7 @@ export const LoginSignup = () => {
             const dataUser = { name, email, password };
             if (isSignup) {
                 await actions.signup(dataUser, navigate);
-<<<<<<< HEAD
-                setSuccessMessage('¡Registro exitoso! Redirigiendo...');
-=======
                 setSuccessMessage();
->>>>>>> de510c5056ad0347db9ac0c09e5d36d0e30453c0
                 setTimeout(() => {
                     setIsSignup(false);
                 },);
@@ -46,52 +42,6 @@ export const LoginSignup = () => {
     };
 
     return (
-<<<<<<< HEAD
-        <div className="container d-flex justify-content-center align-items-center vh-100 bg-light">
-            <div className="card shadow-lg p-4" style={{ maxWidth: "450px", width: "100%" }}>
-                <div className="card-body">
-                    {!isSignup ? (
-                        <form onSubmit={handleSubmit}>
-                            <h2 className="text-center mb-3">Iniciar sesión</h2>
-                            <div className="mb-3">
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    placeholder="Correo electrónico"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    placeholder="Contraseña"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-                                {loading ? 'Cargando...' : 'Iniciar sesión'}
-                            </button>
-                            {error && <p className="text-danger text-center mt-2">{error}</p>}
-                            <p className="text-center mt-3">
-                                ¿No tienes cuenta? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setIsSignup(true)}>Regístrate</span>
-                            </p>
-                            <p className="text-center mt-1">
-                                <Link to="/RecuperacionContraseña" className="text-primary">¿Olvidaste tu contraseña?</Link>
-                            </p>
-                        </form>
-                    ) : (
-                        <form onSubmit={handleSubmit}>
-                            <h2 className="text-center mb-3">Regístrate</h2>
-                            <div className="mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control"
-=======
         <div 
             className="d-flex justify-content-center align-items-center min-vh-100" 
             style={{
@@ -127,46 +77,10 @@ export const LoginSignup = () => {
                                         border: "2px solid #ddd",
                                         transition: "border-color 0.3s ease-in-out",
                                     }}
->>>>>>> de510c5056ad0347db9ac0c09e5d36d0e30453c0
                                     placeholder="Nombre"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     required
-<<<<<<< HEAD
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    placeholder="Correo electrónico"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    placeholder="Contraseña"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-                                {loading ? 'Cargando...' : 'Registrar'}
-                            </button>
-                            {error && <p className="text-danger text-center mt-2">{error}</p>}
-                            {successMessage && <p className="text-success text-center mt-2">{successMessage}</p>}
-                            <p className="text-center mt-3">
-                                ¿Ya tienes cuenta? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setIsSignup(false)}>Inicia sesión</span>
-                            </p>
-                        </form>
-                    )}
-                    <Link to="/" className="text-center d-block mt-3 text-secondary">Volver a la página principal</Link>
-=======
                                     onFocus={(e) => e.target.style.borderColor = "#007bff"}
                                     onBlur={(e) => e.target.style.borderColor = "#ddd"}
                                 />
@@ -249,7 +163,6 @@ export const LoginSignup = () => {
                     <Link to="/" className="d-block mt-3 text-secondary" style={{ fontSize: "1rem", textDecoration: "none" }}>
                         <i className="bi bi-arrow-left"></i> Volver a la página principal
                     </Link>
->>>>>>> de510c5056ad0347db9ac0c09e5d36d0e30453c0
                 </div>
             </div>
         </div>
