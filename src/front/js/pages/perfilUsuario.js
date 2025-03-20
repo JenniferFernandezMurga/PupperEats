@@ -1,8 +1,8 @@
 import React, { useEffect, useContext, useState } from "react";
 import logo from "../../img/Icono puppereats.png";
-import {EdicionPerfil} from "../component/edicionPerfil";
+import { EdicionPerfil } from "../component/edicionPerfil";
 import { Context } from "../store/appContext";
-import { User, MapPin, PlusCircle } from "lucide-react";
+import { User, MapPin, PlusCircle, LogOut, ShoppingCart } from "lucide-react"; // Importar ShoppingCart para el ícono
 import { useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -27,25 +27,56 @@ export const PerfilUsuario = () => {
 
   return (
     <div className="container py-5" style={{ background: "#f9f6f2", minHeight: "100vh", borderRadius: "10px" }}>
-      {/* Header */}
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <div>
-          <Link to="/" className="navbar-brand d-flex align-items-center" onClick={() => setActiveCategory(null)}>
-                              <img src={logo} alt="Logo" style={{ height: "60px", border: "3px solid #000", borderRadius: "10px", padding: "3px" }} />
-                              <span className="fw-bold text-dark" style={{ fontSize: "1.5rem", marginLeft: "10px" }}>Pupper Eats</span>
-                          </Link>
-                          <button className="btn btn-warning me-2" onClick={() => navigate("/carrito")}>🛒 Carrito</button>
-          <button className="btn btn-outline-secondary" onClick={actions.logout}>Cerrar sesión</button>
-        </div>
-      </div>
+      {/* Navbar personalizado */}
+      <nav className="navbar navbar-expand-lg mb-4" style={{ borderRadius: "12px", boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", backgroundColor:"#257180" }}>
+        <div className="container-fluid">
+          {/* Logo */}
+          <Link to="/" className="navbar-brand d-flex align-items-center">
+            <img 
+              src={logo} 
+              alt="Logo" 
+              style={{ height: "60px", border: "3px solid #000", borderRadius: "10px", padding: "3px" }} 
+            />
+            <span className="fw-bold text-dark ms-2" style={{ fontSize: "2.5rem" }}>Pupper Eats</span>
+          </Link>
 
-      {/* Perfil de Usuario */}
-      <div className="card p-4 mb-4 shadow-lg" style={{ borderRadius: "12px", backgroundColor: "#fff8e1" }}>
-        <h2 className="text-dark">Hola, <span className="fw-bold">{store.user.name}</span> 👋</h2>
+          {/* Botón del carrito */}
+          <button 
+            className="btn btn-warning btn-sm d-flex align-items-center gap-2 ms-auto" 
+            onClick={() => navigate("/carrito")}
+            style={{ borderRadius: "8px", whiteSpace: "nowrap" }} // Estilo personalizado
+          >
+            <ShoppingCart size={16} /> {/* Ícono del carrito */}
+            <span>Carrito</span>
+          </button>
+        </div>
+      </nav>
+
+     {/* Perfil usuario */}
+     <div className="card p-4 mb-5" style={{ borderRadius: "12px", backgroundColor: "#f9f6f2", border: "none", border: "none" }}>
+        <h2 className="text-dark mb-3">Hola, <span className="fw-bold">{store.user.name}</span> 👋</h2>
+        <button 
+          className="btn btn-sm d-flex align-items-center gap-2" 
+          onClick={actions.logout}
+          style={{ border: "none", color: "#6c757d", padding: "0" }} // Estilo personalizado
+        >
+          <LogOut size={16} /> {/* Ícono de cerrar sesión */}
+          <span>Cerrar sesión</span>
+        </button>
         <div className="mt-3">
-          <p><User size={16} /> {store.user.name}</p>
-          <p><MapPin size={16} /> {store.user.email}</p>
-          <button className="btn btn-outline-primary" onClick={() => setIsEditModalOpen(true)}>Editar perfil</button>
+          <p className="d-flex align-items-center gap-2">
+            <User size={20} className="text-primary" /> {store.user.name}
+          </p>
+          <p className="d-flex align-items-center gap-2">
+            <MapPin size={20} className="text-primary" /> {store.user.email}
+          </p>
+          <button 
+            className="btn btn-dark" 
+            onClick={() => setIsEditModalOpen(true)}
+            style={{ borderRadius: "none", backgroundColor: "#FD8B51" }}
+          >
+            Editar perfil
+          </button>
         </div>
       </div>
 
@@ -53,12 +84,17 @@ export const PerfilUsuario = () => {
       <EdicionPerfil isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} />
 
       {/* Mis Mascotas */}
-      <h3 className="text-dark mb-3">🐾 Mis Mascotas</h3>
-      <div className="card p-3 shadow-lg" style={{ borderRadius: "12px", backgroundColor: "#fff" }}>
-        <div className="d-flex align-items-center gap-3 flex-wrap">
-          <button className="btn btn-outline-primary d-flex flex-column align-items-center">
-            <PlusCircle size={40} />
-            <Link to="/registro-mascota" className="btn btn-primary">Añadir perfil mascota</Link>
+      <h2 className="text-dark mb-4">🐾 Mis Mascotas</h2>
+      <div className="card p-4" style={{ borderRadius: "12px", backgroundColor: "#fff", border: "none" }}>
+        <div className="d-flex align-items-center gap-4 flex-wrap">
+          <button 
+            className="btn btn-outline-light d-flex flex-column align-items-center justify-content-center p-3" 
+            style={{ borderRadius: "12px", width: "120px", height: "120px", color:"#F2E5BF" }}
+          >
+            <PlusCircle size={40} className="mb-2" />
+            <Link to="/registro-mascota" className="text-decoration-none text-dark fs-6 fw-medium">
+              <span>Añadir mascota</span>
+            </Link>
           </button>
           {store.pets && store.pets.length > 0 ? (
             store.pets.map((pet, index) => (
@@ -69,12 +105,15 @@ export const PerfilUsuario = () => {
                 style={{ cursor: "pointer" }}
               >
                 <img 
-                  src={pet.url || "https://via.placeholder.com/60"} 
+                  src={pet.animal_type === "perro" ? "https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/1024px/1f436.png" :
+                       pet.animal_type === "gato" ? "https://cdn-icons-png.flaticon.com/512/6988/6988878.png" :
+                       pet.animal_type === "exotico" ? "https://cdn-icons-png.flaticon.com/512/802/802338.png" :
+                    "https://via.placeholder.com/60" }
                   alt={pet.name} 
                   className="rounded-circle border border-secondary"
                   style={{ width: 60, height: 60, objectFit: "cover" }} 
                 />
-                <span className="d-block mt-1 fw-semibold">{pet.name}</span>
+                <span className="d-block mt-2 fw-semibold">{pet.name}</span>
               </div>
             ))
           ) : (
