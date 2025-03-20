@@ -33,18 +33,9 @@ export const VistaProducto = () => {
   }, [id]);
 
   return (
-    <div className="flex-container mt-5 text-center">
+    <div className="flex-container p-4 text-center"    style={{ backgroundColor:"#EAD196"}}>
       <Producto data={detallesProducto} id={id} />
       <hr className="mt-5" style={{ width: "90%" }}></hr>
-      <div className="sección similares my-5">
-        <h3>Productos similares</h3>
-        <div className="row justify-content-center my-5">
-          <div className="col-md-3 border m-2" style={{ width: "20%", height: "300px" }}></div>
-          <div className="col-md-3 border m-2" style={{ width: "20%", height: "300px" }}></div>
-          <div className="col-md-3 border m-2" style={{ width: "20%", height: "300px" }}></div>
-          <div className="col-md-3 border m-2" style={{ width: "20%", height: "300px" }}></div>
-        </div>
-      </div>
     </div>
   );
 };
