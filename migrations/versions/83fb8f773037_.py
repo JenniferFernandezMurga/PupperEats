@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 42688e0b6432
+Revision ID: 83fb8f773037
 Revises: 
-Create Date: 2025-03-15 15:33:35.994258
+Create Date: 2025-03-19 01:32:37.695224
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '42688e0b6432'
+revision = '83fb8f773037'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,6 +43,14 @@ def upgrade():
     sa.Column('pathologies', sa.Text(), nullable=True),
     sa.Column('url', sa.String(length=255), nullable=True),
     sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('password_reset',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('email', sa.String(length=120), nullable=False),
+    sa.Column('token', sa.String(length=255), nullable=False),
+    sa.Column('expires_at', sa.DateTime(), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('token')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -82,6 +90,7 @@ def downgrade():
     op.drop_table('pet')
     op.drop_table('order')
     op.drop_table('user')
+    op.drop_table('password_reset')
     op.drop_table('foods')
     op.drop_table('accessories')
     # ### end Alembic commands ###

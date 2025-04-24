@@ -1,4 +1,6 @@
 
+
+
 import click
 from api.models import db, User, Food, Accessories, Pet
 from flask_bcrypt import Bcrypt 
@@ -47,7 +49,7 @@ def setup_commands(app):
         catfood.animal_type = "gato"
         catfood.age = "adulto"
         catfood.pathologies = "hipoalergénico"
-        catfood.url = ""
+        catfood.url = "https://era2vrmzk5n.exactdn.com/wp-content/uploads/2022/09/Pienso-15K-croqPEZ-Ayurveda-gato-kasaludintegral-1080x1080pix.jpg?strip=all&lossy=1&w=648&ssl=1"
         db.session.add(catfood)
         db.session.commit()
 
@@ -60,7 +62,8 @@ def setup_commands(app):
         catfood.price = 6.99
         catfood.animal_type = "gato"
         catfood.age = "adulto"
-        catfood.pathologies = "diabético"
+        catfood.pathologies = "diabetes"
+        catfood.url = "https://bixoto.com/media/catalog/product/cache/2e45ba69d70625e0fc47dbc2d34862e1/M/Y/MYNKvuY-920-2042_webp.png"
         db.session.add(catfood)
         db.session.commit()
 
@@ -73,7 +76,8 @@ def setup_commands(app):
         catfood.price = 10.70
         catfood.animal_type = "gato"
         catfood.age = "cachorro"
-        catfood.pathologies = ""
+        catfood.pathologies = "ninguna"
+        catfood.url = "https://www.tiendanimal.es/dw/image/v2/BDLQ_PRD/on/demandware.static/-/Sites-kiwoko-master-catalog/default/dw55de3cf2/images/ownat_prime_gf_kitten_OWN31463.jpg?sw=780&sh=780&sm=fit&q=85"
         db.session.add(catfood)
         db.session.commit()
 
@@ -87,6 +91,7 @@ def setup_commands(app):
         catfood.animal_type = "gato"
         catfood.age = "senior"
         catfood.pathologies = "renal"
+        catfood.url = "https://media.zooplus.com/bilder/2/400/279797_pla_natural_greatness_diet_vet_renal_oxalate_5kg_hs_01_2.jpg"
         db.session.add(catfood)
         db.session.commit()
 
@@ -100,6 +105,7 @@ def setup_commands(app):
         catfood.animal_type = "gato"
         catfood.age = "adulto"
         catfood.pathologies = "obesidad"
+        catfood.url = "https://www.tiendanimal.es/dw/image/v2/BDLQ_PRD/on/demandware.static/-/Sites-kiwoko-master-catalog/default/dwfc3b7ec1/images/pienso_gato_criadores_dietetic_obesity_CRD8967_M.jpg?sw=780&sh=780&sm=fit&q=85"
         db.session.add(catfood)
         db.session.commit()
         
@@ -109,16 +115,17 @@ def setup_commands(app):
     @app.cli.command("insert_data_dogfood")
     def insert_data_food():
         dogfood = Food()
-        dogfood.name = "Special Care hepatic/renal"
-        dogfood.brand="nfnatcane"
-        dogfood.description = "asd"
-        dogfood.ingredients = "ads"
-        dogfood.price = 1.
+        dogfood.name = " Veterinary Diet Renal pienso para perros"
+        dogfood.brand="Concept for Life "
+        dogfood.description = "Pienso dietético para perros adultos con insuficiencia renal crónica. Bajo en fósforo y proteína para reducir la formación de cálculos de oxalato y de urato. Con propiedades alcalinizantes de la orina"
+        dogfood.ingredients = "Arroz, 31,5 % maíz, grasa de ave, 4,7 % proteína de ave (rica en pollo, en parte deshidratada e hidrolizada), proteína de maíz, pulpa de remolacha deshidratada (desazucarada), gelatina (hidrolizada, HDP*), linaza, aceite de pescado, 1,5 % hígado de pollo (en parte deshidratado e hidrolizado, HDP*), aceite de girasol, carbonato de calcio, cloruro sódico, cloruro potásico, huevo (deshidratado), lignocelulosa, 0,3 % paredes celulares de levadura (ricas en manano-oligosacáridos y en beta-glucanos), 0,2 % citrato de potasio, inulina de achicoria, harina de algas (rica en DHA**)."
+        dogfood.price = 7.99
         dogfood.pathologies = "renal"
         dogfood.animal_type = "perro"
         dogfood.age = "senior"
-        dogfood.size = "medium"
-        dogfood.weight = 12.
+        dogfood.size = "medio"
+        dogfood.weight = 1.
+        dogfood.url = "https://media.zooplus.com/bilder/9/400/cfl_dog_renal_1kg_1000x1000_9.jpg"
         db.session.add(dogfood)
         db.session.commit()
 
@@ -133,6 +140,7 @@ def setup_commands(app):
         dogfood.age = "cachorro"
         dogfood.size = "grande"
         dogfood.weight = 1.
+        dogfood.url = "https://www.tiendanimal.es/dw/image/v2/BDLQ_PRD/on/demandware.static/-/Sites-kiwoko-master-catalog/default/dw9b40881f/images/pienso_perros_ownat_care_digestive_OWN031569.jpg.jpg?sw=780&sh=780&sm=fit&q=85"
         db.session.add(dogfood)
         db.session.commit()
 
@@ -142,12 +150,13 @@ def setup_commands(app):
         dogfood.brand="Virbac W1 Veterinary HPM"
         dogfood.description = "El alimento dietético para perros tiene un bajo contenido energético y de azúcares totales. Es bajo en hidratos de carbono y se caracteriza por un índice glucémico bajo. En cambio, Virbac Veterinary HPM Dog Weight Loss & Diabetes W1 proporciona a su mascota abundante fibra bruta, que favorece una agradable sensación de saciedad. La receta no contiene trigo, gluten, soja ni carne de vacuno, por lo que es bien tolerada por muchos perros."
         dogfood.ingredients = "Proteínas deshidratadas de cerdo y de ave, fécula de patata, lignocelulosa, hidrolizado de proteínas de cerdo y de ave, cáscaras de judías, grasa animal, minerales, linaza, pulpa de remolacha deshidratada, fibra de psyllium"
-        dogfood.price = 12.
+        dogfood.price = 12.99
         dogfood.pathologies = "diabetes"
         dogfood.animal_type = "perro"
         dogfood.age = "adulto"
-        dogfood.size = ""
-        dogfood.weight = 12.
+        dogfood.size = "medio"
+        dogfood.weight = 1.5
+        dogfood.url = "https://www.tiendanimal.es/dw/image/v2/BDLQ_PRD/on/demandware.static/-/Sites-kiwoko-master-catalog/default/dw6af74272/images/virbac_pienso_perros_hpm_weight_loss_diabetes_VIRAD360106.jpg?sw=780&sh=780&sm=fit&q=85"
         db.session.add(dogfood)
         db.session.commit()
 
@@ -157,7 +166,7 @@ def setup_commands(app):
         dogfood.description = "Briantos ofrece el alimento adecuado para todas las necesidades. Nuestras recetas sin cereales cuentan con una alta tolerancia entre los perros. El mayor contenido de humedad convence incluso a los perros más quisquillosos. La alta calidad de los ingredientes utilizados en la elaboración de este alimento y todos los controles de calidad durante la producción garantizan el mejor producto para tu perro."
         dogfood.ingredients = "5 por ciento de proteínas de pavo (deshidratadas), (22 %) de patatas (deshidratadas), fécula de patata (deshidratada), celulosa, 5 % de boniatos (deshidratados), pulpa de remolacha deshidratada (desazucarada), grasa de ave, proteínas de ave (deshidratadas), hidrolizado de proteínas, guisantes (deshidratados), fosfato monocálcico, aceite de pescado, achicoria (deshidratada), levadura (deshidratada), psilio, cloruro sódico, apio (deshidratado), zanahorias (deshidratadas)."
         dogfood.price = 33.99
-        dogfood.pathologies = "esterilizado"
+        dogfood.pathologies = "ninguna"
         dogfood.animal_type = "perro"
         dogfood.age = "adulto"
         dogfood.size = "grande"
@@ -172,18 +181,16 @@ def setup_commands(app):
         dogfood.description = "Un mayor contenido de proteínas combinadas con la L-carnitina, así como un ajustado contenido energético y en grasas (-11 % en comparación con Concept for Life Mini Adult) puede influir ayudar a mantener el peso ideal mediante una alimentación adecuada. De este modo, se puede evitar el aumento de peso causado por la alteración del metabolismo tras la castración. Además, las fibras dietéticas seleccionadas de psilio y lignocelulosa proporcionan una sensación de saciedad, lo que puede favorecer una ingesta menor de energía."
         dogfood.ingredients = "proteína de ave (31 % parcialmente deshidratada e hidrolizada), carne de pollo fresca (20 %), copos de patata, guisantes, fécula de patata, lignocelulosa (5,4 %), pulpa de remolacha seca, grasa de ave, linaza, pulpa de manzana, aceite de salmón (0,25 %), cloruro de sodio, aceite de girasol (0,15 %), inulina de achicoria (0,2 %), psilio (0,1 %)."
         dogfood.price = 5.49
-        dogfood.pathologies = "esterilizado"
+        dogfood.pathologies = "ninguna"
         dogfood.animal_type = "perro"
         dogfood.age = "adulto"
-        dogfood.size = "pequeño"
+        dogfood.size = "pequeña"
         dogfood.weight = 1.
+        dogfood.url = "https://media.zooplus.com/bilder/7/400/pla_163496_cfl_dog_sterilised_mini_1kg_7.jpg"
         db.session.add(dogfood)
         db.session.commit()
       
       
-      
-
-
     @app.cli.command("insert_data_exoticfood")
     def insert_data_exoticfood():
         exoticfood = Food()
@@ -192,10 +199,11 @@ def setup_commands(app):
         exoticfood.description = "bunny KaninchenTraum Special Edition Harmony es el alimento ideal para tu conejo enano. Su mezcla única de 63 plantas y hierbas de praderas no tratadas ofrece una alimentación natural y variada. Los ingredientes cuidadosamente seleccionados, sobre todo las flores de aciano y siempreviva, garantizan una experiencia aromática y llena sabor que le encantará a tu amiguito."
         exoticfood.ingredients = "Hierbas de pasto permanente (fleo de los prados, festuca de los prados, festuca roja, hierba de cola de zorra, pasto azul de Kentucky, dactilo, perifollo silvestre, falso diente de león, arveja de campo, milenrama común, alquimila, cerrillo, trébol amarillo, llantén menor, salvia de los prados, briza media, bromo erguido, campanilla silvestre, alcaravea, cártamo silvestre, cerastio común, cardo borriquero, bromo blando, diente de león común, hierba capilar, ulmaria, cerastio de campo, fresa silvestre, arveja silvestre, gallineta blanca, crepis de los prados, galio amarillo, avénula pelosa, lotus común, cola de caballo, galio blanco, geranio blanco de campo, margarita de campo, viuda silvestre, flor de cuclillo, arroyuela, verónica de los campos, hierba triguera, poa de los prados, llantén mediano, pimpinela mayor, alverjilla, nomeolvides silvestre, saxifraga blanca, pimpinela mayor, cincoenrama, primavera común, conejera cabizbaja, pimpinela menor, estelaria, barba de cabra, ortiga mayor, ontineta, trébol rojo, arveja de los setos, búgula de Ginebra, egopodio, margarita), cáscaras de avena, harina de extracción de semilla de girasol, harina de extracción de lino, pulpa de manzana, bagazo de zanahoria, salvado de trigo, harina de extracción de semillas de colza, flor de aciano rojo (2 %), flores de siempreviva (1 %), semillas de hinojo (0,5 %), papaya deshidratada, flores de camomila."
         exoticfood.price = 14.69
-        exoticfood.pathologies = ""
-        exoticfood.animal_type = "exótico"
+        exoticfood.pathologies = "ninguna"
+        exoticfood.animal_type = "exotico"
         exoticfood.age = "adulto"
         exoticfood.weight = 1.5
+        exoticfood.url = "https://media.zooplus.com/bilder/7/400/547507_pla_bunny_kaninchentraum_special_edition_harmony_1_5k_hs_01_7.jpg"
         db.session.add(exoticfood)
         db.session.commit()
 
@@ -205,10 +213,11 @@ def setup_commands(app):
         exoticfood.description = "Fórmula todo en uno: la comida beaphar Care+ está constituida por gránulos de composición uniforme. Esto permite evitar las carencias nutricionales que se pueden dar por la alimentación selectiva de tu conejo. Su fórmula equilibrada y sin azúcar ha sido elaborada por veterinarios y científicos expertos. Contiene un 25 % de extruido de fibra cruda y una cantidad elevada de nutrientes y otras sustancias vitales. La dureza de los gránulos favorece la abrasión dental y la higiene bucal."
         exoticfood.price = 26.49
         exoticfood.ingredients = "Subproductos vegetales (Yucca Schidigera 0,1 %, Echinacea 0,03 %, extracto de té verde 0,03 %, FOS 0,01 %) , cereales, verduras, minerales, levadura  (MOS 0,1 %), semillas, algas (espirulina 0,01 %)."
-        exoticfood.pathologies = "diabético"
-        exoticfood.animal_type = "exótico"
+        exoticfood.pathologies = "diabetes"
+        exoticfood.animal_type = "exotico"
         exoticfood.age = "senior"
         exoticfood.weight = 5.
+        exoticfood.url = "https://media.zooplus.com/bilder/0/400/73777_pla_beaphar_care_kaninchen_5kg_hs_1_2_0.jpg"
         db.session.add(exoticfood)
         db.session.commit()
 
@@ -218,10 +227,11 @@ def setup_commands(app):
         exoticfood.description = "Alimento variado y rico en fibra como base para el crecimiento óptimo de los conejos y conejos enanos hasta los 8 meses de edad. Nature Cuni Junior contiene una gran cantidad de hierbas, semillas y hierbas aromáticas sabrosas, combinadas con verduras y frutos que suministran altas dosis de vitaminas, minerales y oligoelementos. Sin cereales añadidos."
         exoticfood.price = 9.99
         exoticfood.ingredients = "Subproductos vegetales (hierba timotea, 20 % hierbas y hierbas aromáticas), verdura (18,1 % guisantes, 5,4 % zanahorias, 4 % frijol chícharo, 4 % remolacha), frutos, semillas, extracto de proteína vegetal, minerales, aceites y grasas, FOS, caléndula, MOS, algas, yuca."
-        exoticfood.pathologies = ""
-        exoticfood.animal_type = "exótico"
+        exoticfood.pathologies = "ninguna"
+        exoticfood.animal_type = "exotico"
         exoticfood.age = "cachorro"
         exoticfood.weight = 2.3
+        exoticfood.url = "https://d7rh5s3nxmpy4.cloudfront.net/CMP9365/8/18407_347074-D.jpg"
         db.session.add(exoticfood)
         db.session.commit()
         
@@ -232,9 +242,10 @@ def setup_commands(app):
         exoticfood.price = 8.69
         exoticfood.ingredients = "Fleo, dáctilo, hierbas, perejil, copos de guisantes, dados de zanahoria, habas, chirivía, hojas de menta, hinojo, dados de manzana, semilla de lino, hojas de diente de león, remolacha, hojas de ortiga, flor de manzanilla, comino y vitaminas."
         exoticfood.pathologies = "escorbuto"
-        exoticfood.animal_type = "exótico"
+        exoticfood.animal_type = "exotico"
         exoticfood.age = "senior"
         exoticfood.weight = 2.3
+        exoticfood.url = "https://media.zooplus.com/bilder/5/400/28140_pla_jrfarm_grainless_complete_zwergkaninchen_5.jpg"
         db.session.add(exoticfood)
         db.session.commit()
     
@@ -247,7 +258,7 @@ def setup_commands(app):
         accessories.price = 7.99
         accessories.animal_type = "perro"
         accessories.pathologies = ""
-        accessories.url = ""
+        accessories.url = "https://media.zooplus.com/bilder/4/400/518156_pla_tiaki_security_collar_s_fg_5107_4.jpg"
         db.session.add(accessories)
         db.session.commit()
 
@@ -258,7 +269,7 @@ def setup_commands(app):
         accessories.price = 35.99
         accessories.animal_type = "gato"
         accessories.pathologies = ""
-        accessories.url = ""
+        accessories.url = "https://media.zooplus.com/bilder/3/400/modern_living_kratzm_bel_f_r_katzen_zur_wandmontage_hs_01_3.jpg"
         db.session.add(accessories)
         db.session.commit()
 
@@ -269,7 +280,7 @@ def setup_commands(app):
         accessories.price = 199.99
         accessories.animal_type = "perro"
         accessories.pathologies = ""
-        accessories.url = ""
+        accessories.url = "https://www.ferplast.es/cdn/shop/files/1-0180017573_x620.jpg?v=1728917798"
         db.session.add(accessories)
         db.session.commit()
 
@@ -278,9 +289,9 @@ def setup_commands(app):
         accessories.brand="TIAKI"
         accessories.description = "El juguete de inteligencia TIAKI para pequeños animales es un juguete maravilloso que estimula el comportamiento natural de búsqueda de comida y juego de conejos, hámsters y cobayas. Este juguete interactivo tiene una serie de zanahorias de madera que ofrecen a tus mascotas un divertido reto , por ejemplo, arrancarlas y roerlas. La zona de juegos no solo es entretenida, sino también segura para que tus animales la roan, ya que está hecha de papel, madera de pino y hojas de maíz."
         accessories.price = 7.99
-        accessories.animal_type = "exótico"
+        accessories.animal_type = "exotico"
         accessories.pathologies = ""
-        accessories.url = ""
+        accessories.url = "https://media.zooplus.com/bilder/7/400/451140_pla_tiaki_intelligence_toy_carrot_patch_fg_9772_7.jpg"
         db.session.add(accessories)
         db.session.commit()
     
@@ -290,7 +301,7 @@ def setup_commands(app):
         accessories.brand="Bayer Vetriderm"
         accessories.description = "Gracias a la loción tópica Vetriderm, de Bayer, es posible reducir de manera efectiva la causa de las reacciones alérgicas a los animales domésticos. Simplemente, aplica la solución sobre un paño y, con ayuda de este, extiende el producto sobre el pelo de tu perro o gato; primero en la dirección del crecimiento del pelo y después en el sentido opuesto. De este modo, eliminarás las partículas que quedan en el pelaje como los epitelios o los restos de saliva o de orina, que pueden producir reacciones alérgicas."
         accessories.price = 21.99
-        accessories.animal_type = "exótico"
+        accessories.animal_type = "exotico"
         accessories.pathologies = ""
         accessories.url = "https://media.zooplus.com/bilder/7/400/73160_pla_vetriderm_350ml_hs_01_7.jpg"
         db.session.add(accessories)
@@ -311,7 +322,7 @@ def setup_commands(app):
         
         pet= Pet()
         pet.name = "recoleto"
-        pet.size="medium"
+        pet.size="medio"
         pet.breed= "asd"
         pet.age="senior"
         pet.animal_type = "perro"
@@ -358,3 +369,16 @@ def setup_commands(app):
 
     
 
+
+
+
+    
+
+    
+
+
+
+
+    
+
+    

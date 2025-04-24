@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
 from api.models import db, User, Food, Pet, Accessories, Order
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -9,24 +9,66 @@ from sqlalchemy import select, and_, or_
 import json
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_bcrypt import Bcrypt 
+import stripe
+from flask_mail import Message
+import random, string
+from unidecode import unidecode
+
 
 api = Blueprint('api', __name__)
 bcrypt = Bcrypt()
+# Configura tu clave secreta de Stripe
+stripe.api_key = "sk_test_51R3GSLPowRpDmMbeD74L6GGIHz1FSWCfbrchq2LGRqIIJP1E0Rr11pu4nLqjSKqkO4ZtSrH23LcSkcCusMKELFT700pP7sFDoQ"  # Reemplaza con tu clave secreta de Stripe
 
 
 # Allow CORS requests to this API
 CORS(api)
 
+@api.route('/create-payment', methods=['POST'])
+def create_payment():
+    response_body = {}
+    try:
+        data = request.json
+        amount = int(round(float(data['amount']) * 100)) # Convertir a céntimos y redondear
+        intent = stripe.PaymentIntent.create(
+            amount=amount,  # Usar el amount convertido
+            currency=data['currency'],
+            automatic_payment_methods={'enabled': True}
+        )
+        response_body['client_secret'] = intent['client_secret']
+        return jsonify({'clientSecret': intent['client_secret']}), 200
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 403
 
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
 
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-#     }
+@api.route("/forgotpassword", methods=["POST"])
+def forgotpassword():
+    recover_email = request.json.get('email')
 
-#     return jsonify(response_body), 200
+    user = User.query.filter_by(email=recover_email).first()
+    if not user:
+        return jsonify({"msg": "El correo ingresado no existe en nuestros registros"}), 400
 
+    # Genera una nueva contraseña temporal (aleatoria)
+    recover_password = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(12))
+
+    # Guardar la nueva contraseña cifrada (muy importante)
+    bcrypt = Bcrypt()
+    hashed_password = bcrypt.generate_password_hash(recover_password).decode('utf-8')
+    user.password = hashed_password
+    db.session.commit()
+
+    # Enviar la contraseña temporal al correo del usuario
+    from flask_mail import Message
+    msg = Message(
+        subject="Recuperación de contraseña",
+        sender=current_app.config["MAIL_USERNAME"],
+        recipients=[recover_email],
+        body=f"Tu nueva contraseña temporal es: {recover_password}. Por favor inicia sesión y cámbiala inmediatamente."
+    )
+    current_app.mail.send(msg)
+
+    return jsonify({"msg": "Se ha enviado una nueva contraseña a tu correo electrónico"}), 200
 
 @api.route('/')
 def sitemap():
@@ -101,12 +143,17 @@ def get_pet_suggestions(pet_id):
                                                              Food.age==pet["age"],
                                                              Food.pathologies==pet["pathologies"])).all()
     else:
-        food_suggestions = db.session.execute(select(Food).where(Food.animal_type==pet["animal_type"]),
+        food_suggestions = db.session.execute(select(Food).where(and_(Food.animal_type==pet["animal_type"]),
                                                              Food.age==pet["age"],
-                                                             Food.pathologies==pet["pathologies"]).all()
+                                                             Food.pathologies==pet["pathologies"])).all()
     if not food_suggestions :
         return "no suggestions found", 404
     return [food[0].serialize() for food in food_suggestions], 200
+
+
+
+
+
 
 
 # #obtener sugerencias de comida según mascota
@@ -173,7 +220,7 @@ def get_all_dog_food():
 
 @api.route('/foods/exotic', methods=['GET'])
 def get_all_exotic_food():
-    food_exotic = db.session.query(Food).filter(Food.animal_type.ilike("%exótico%")).all()
+    food_exotic = db.session.query(Food).filter(Food.animal_type.ilike("%exotico%")).all()
 
 
     print("Datos obtenidos:", food_exotic)
@@ -347,16 +394,16 @@ def create_pet():
     current_user_email = get_jwt_identity()
     user = User().query.filter_by(email=current_user_email).first()
 
-    if not user:
+    if not user: 
         return jsonify({"msg": "usuario no encontrado"}), 400
 
     new_pet = Pet(
         name=data["name"],
-        size= None,
-        breed= None,
+        size= data["size"],
+        breed= data["breed"],
         age=data["age"],
         animal_type=data["animal_type"],
-        pathologies= None,
+        pathologies= data["pathologies"],
         url=data.get("url"),  # Asegúrate de que se está obteniendo correctamente
         user_id=user.id
         )
@@ -424,7 +471,7 @@ def update_user():
     })
 
 
-@api.route('/pets/<int:pet_id>', methods=['PUT'])
+@api.route('/pet/<int:pet_id>', methods=['PUT'])
 @jwt_required()
 def new_pet(pet_id):
     data = request.get_json()
@@ -502,7 +549,7 @@ def delete_user():
 @jwt_required()
 def delete_pet(pet_id):
     
-    pet = Pet.query.get(pet_id).first()
+    pet = Pet.query.get(pet_id)
 
     # Eliminar la mascota de la base de datos
     db.session.delete(pet)
@@ -512,7 +559,6 @@ def delete_pet(pet_id):
     return jsonify({
         'message': f'Pet {pet.name} with id {pet.id} has been deleted successfully.'
     }), 200
-
 
 @api.route('/search', methods=['GET'])
 def search_product():
@@ -584,5 +630,3 @@ def order(user_id):
     db.session.add(new_order)
     db.session.commit()
     return jsonify(new_order.serialize()), 201
-
-
